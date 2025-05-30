@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluasi Model</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="bg-light">
+    <div class="header">
+        <i class="fa-solid fa-house-chimney fa-2x me-2"></i>
+        <span style="font-size:1.7rem;font-weight:600;letter-spacing:1px;">Evaluasi Model Prediksi Harga Rumah</span>
+    </div>
+    <div class="container mt-4 mb-4">
+        <div class="card shadow-lg">
+            <div class="card-header bg-secondary text-white text-center">
+                <h3>Evaluasi Model</h3>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <p><strong>Mean Squared Error (MSE):</strong> {{ mse }}</p>
+                    <div class="progress mb-3" style="height: 18px;">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: {{ 100 - (mse|float / 1000000 * 100 if mse|float < 1000000 else 5) }}%;" aria-valuenow="{{ mse }}" aria-valuemin="0" aria-valuemax="1000000">{{ mse }}</div>
+                    </div>
+                    <p><strong>Mean Absolute Error (MAE):</strong> {{ mae }}</p>
+                    <div class="progress mb-3" style="height: 18px;">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ 100 - (mae|float / 100000 * 100 if mae|float < 100000 else 5) }}%;" aria-valuenow="{{ mae }}" aria-valuemin="0" aria-valuemax="100000">{{ mae }}</div>
+                    </div>
+                    <p><strong>R<sup>2</sup> Score:</strong> {{ r2 }}
+                        {% if r2|float > 0.8 %}
+                            <span class="badge bg-success ms-2"><i class="fa-solid fa-thumbs-up"></i> Akurasi Tinggi</span>
+                        {% elif r2|float > 0.6 %}
+                            <span class="badge bg-info ms-2">Cukup Baik</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark ms-2">Perlu Peningkatan</span>
+                        {% endif %}
+                    </p>
+                    <a href="/" class="btn btn-primary mt-3"><i class="fa-solid fa-arrow-left"></i> Kembali ke Form</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        &copy; {{ 2024 }} Prediksi Harga Rumah AI &mdash; Praktikum AI
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+</body>
+</html>
