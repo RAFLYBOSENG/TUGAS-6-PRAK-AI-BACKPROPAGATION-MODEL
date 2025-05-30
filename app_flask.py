@@ -78,5 +78,6 @@ def visualisasi():
 
     return render_template('visualisasi.html', loss_plot_data=plot_data['loss_plot'])
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
